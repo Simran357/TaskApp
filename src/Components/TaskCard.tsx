@@ -1,5 +1,5 @@
 import Button from "./Button";
-import type { TaskCardProps } from "../Utils/interface";
+import type {  TaskCardProps } from "../Utils/interface";
 
 const TaskCard = ({
   task,
@@ -18,7 +18,7 @@ const TaskCard = ({
           : "bg-white border-gray-200 hover:shadow-lg hover:border-blue-500"
       }`}
     >
-      <button
+    <button
         onClick={() => onFavorite(task._id, task.favorite)}
         className={`absolute top-4 right-4 text-2xl ${
           task.favorite ? "text-yellow-400" : "text-gray-300"

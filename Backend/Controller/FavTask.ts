@@ -21,7 +21,7 @@ const FavTask = async (
     const updatedTask = await noteSchema.findByIdAndUpdate(
   id,
   { favorite },
-  { new: true }
+ 
 );
 
     if (!updatedTask) {

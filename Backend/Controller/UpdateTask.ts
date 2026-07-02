@@ -23,9 +23,6 @@ const UpdateTask = async (
     const updatedTask = await noteSchema.findOneAndUpdate(
       { _id: id },
       req.body,
-      {
-        returnDocument: "after",
-      }
     );
 
     if (!updatedTask) {

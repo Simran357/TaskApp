@@ -1,5 +1,5 @@
 import TaskCard from "./TaskCard";
-import type { Task, TaskListProps } from "../Utils/interface";
+import type { TaskListProps } from "../Utils/interface";
 
 
 
