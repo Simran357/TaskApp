@@ -236,7 +236,7 @@ function App() {
 
     try {
       const res = await axios.put<TaskListResponse>(
-        `http://localhost:5001/Api/favoriteTask/${id}`,
+        `http://localhost:5001/Api/FavTask/${id}`,
         {
           favorite: !favorite,
         }

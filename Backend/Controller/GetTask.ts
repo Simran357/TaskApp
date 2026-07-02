@@ -1,7 +1,5 @@
 import type { Request, Response } from "express";
-const noteSchema = require("./Schema/index") as {
-  find: () => Promise<unknown[]>;
-};
+import noteSchema from "./Schema/index.js";
 
 const GetTask = async (_req: Request, res: Response): Promise<void> => {
   try {

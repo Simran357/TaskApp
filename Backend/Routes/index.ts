@@ -18,8 +18,6 @@ router.put("/FavTask/:id", FavTask);
 
 console.log("Router is working");
 
-router.get("/test", (req: Request, res: Response) => {
-  res.send("Router is working");
-});
+
 
 export default router;

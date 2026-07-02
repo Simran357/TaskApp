@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 
-const noteSchema = require("./Schema/index");
+import noteSchema from "./Schema/index.js";
 
 interface UpdateTaskParams {
   id: string;

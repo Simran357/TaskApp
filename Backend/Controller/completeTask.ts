@@ -1,24 +1,50 @@
-import express from "express";
 import type { Request, Response } from "express";
+import noteSchema from "./Schema/index.js";
 
-import AddTask from "./AddTask.js";
-import GetTask from "./GetTask.js";
-import UpdateTask from "./UpdateTask.js";
-import DeleteTask from "./DeleteTask.js";
-import CompleteTask from "./completeTask.js";
+interface CompleteTaskParams {
+  id: string;
+}
 
-const router = express.Router();
+interface CompleteTaskBody {
+  completed: boolean;
+}
 
-router.post("/AddTask", AddTask);
-router.get("/GetTask", GetTask);
-router.put("/UpdateTask/:id", UpdateTask);
-router.delete("/DeleteTask/:id", DeleteTask);
-router.put("/completeTask/:id", CompleteTask);
+const completeTask = async (
+  req: Request<CompleteTaskParams, {}, CompleteTaskBody>,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
 
-console.log("Router is working");
+    const updatedTask = await noteSchema.findByIdAndUpdate(
+      id,
+      { completed },
+      { new: true }
+    );
 
-router.get("/test", (req: Request, res: Response): void => {
-  res.send("Router is working");
-});
+    if (!updatedTask) {
+      res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+      return;
+    }
 
-export default router;
+    res.status(200).json({
+      success: true,
+      message: "Task status updated successfully",
+      data: updatedTask,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Internal Server Error",
+    });
+  }
+};
+
+export default completeTask;
