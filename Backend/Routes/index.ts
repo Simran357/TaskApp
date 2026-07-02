@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
-
-import AddTask from "../Controller/AddTask";
-import GetTask from "../Controller/GetTask";
-import updateTask from "../Controller/UpdateTask";
-import DeleteTask from "../Controller/DeleteTask";
-import completeTask from "../Controller/completeTask";
-import FavTask from "../Controller/FavTask";
+import express from "express";
+import type { Request, Response } from "express";
+import AddTask from "../Controller/AddTask.js";
+import GetTask from "../Controller/GetTask.js";
+import updateTask from "../Controller/UpdateTask.js";
+import DeleteTask from "../Controller/DeleteTask.js";
+import completeTask from "../Controller/completeTask.js";
+import FavTask from "../Controller/FavTask.js";
 
 const router = express.Router();
 
