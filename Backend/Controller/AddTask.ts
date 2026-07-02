@@ -1,10 +1,11 @@
-import { Request, Response } from "express";
-import noteSchema from "./Schema";
+import type { Request, Response } from "express";
+import noteSchema from "./Schema/index.js";
 
-const AddTask = async (req: Request, res: Response): Promise<void> => {
+const AddTask = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    console.log(req.body);
-
     const dbData = await noteSchema.create(req.body);
 
     res.status(201).json({
@@ -12,10 +13,11 @@ const AddTask = async (req: Request, res: Response): Promise<void> => {
       data: dbData,
     });
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({
-      message: error instanceof Error ? error.message : "Internal Server Error",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Internal Server Error",
     });
   }
 };

@@ -1,5 +1,5 @@
-import type { Request, Response } from "express-serve-static-core";
-import noteSchema from "./Schema/index";
+import type { Request, Response } from "express";
+import noteSchema from "./Schema/index.js";
 
 interface DeleteTaskParams {
   id: string;
@@ -11,7 +11,8 @@ const DeleteTask = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    console.log("deletetask id", id);
+
+    console.log("Delete task id:", id);
 
     const deletedTask = await noteSchema.findByIdAndDelete(id);
 

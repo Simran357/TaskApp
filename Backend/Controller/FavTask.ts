@@ -1,6 +1,5 @@
-import { Request, Response } from "express";
-import noteSchema from "./Schema/index";
-
+import type { Request, Response } from "express";
+import noteSchema from "./Schema/index.js";
 interface FavTaskParams {
   id: string;
 }
@@ -10,19 +9,21 @@ interface FavTaskBody {
 }
 
 const FavTask = async (
-  req: Request<FavTaskParams, unknown, FavTaskBody>,
+  req: Request<FavTaskParams, {}, FavTaskBody>,
   res: Response
 ): Promise<void> => {
   try {
     const { id } = req.params;
     const { favorite } = req.body;
 
-    console.log("favtask id", id, "favorite:", favorite);
+    console.log("favTask id:", id, "favorite:", favorite);
 
     const updatedTask = await noteSchema.findByIdAndUpdate(
       id,
       { favorite },
-      { new: true }
+      {
+        returnDocument: "after",
+      }
     );
 
     if (!updatedTask) {
@@ -37,7 +38,6 @@ const FavTask = async (
       data: updatedTask,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       message: (error as Error).message,
     });

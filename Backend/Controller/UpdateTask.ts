@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import noteSchema from "../Controller/Schema/index";
+import type { Request, Response } from "express";
+
+const noteSchema = require("./Schema/index");
 
 interface UpdateTaskParams {
   id: string;
@@ -13,7 +14,7 @@ interface UpdateTaskBody {
 }
 
 const UpdateTask = async (
-  req: Request<UpdateTaskParams, unknown, UpdateTaskBody>,
+  req: Request<UpdateTaskParams, {}, UpdateTaskBody>,
   res: Response
 ): Promise<void> => {
   try {
