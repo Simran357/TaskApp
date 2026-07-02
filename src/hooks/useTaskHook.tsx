@@ -25,13 +25,7 @@ const fetchTasks = async () => {
   const res = await getTasks();
 
   console.log("GET TASKS RESPONSE");
-  console.table(
-    res.data.tasks.map((task: Task) => ({
-      id: task._id,
-      task: task.task,
-      favorite: task.favorite,
-    }))
-  );
+ 
 
   dispatch({
     type: "SET_TASKS",
