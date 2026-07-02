@@ -8,25 +8,23 @@ export interface INote extends Document {
   updatedAt: Date;
 }
 
-const noteSchema: Schema<INote> = new Schema(
-  {
-    task: {
-      type: String,
-      required: true,
-    },
-    disc: {
-      type: String,
-    },
-    completed: {
-      type: Boolean,
-      default: false,
-    },
+const noteSchema = new mongoose.Schema({
+  task: {
+    type: String,
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-);
-
+  disc: {
+    type: String,
+  },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
+});
 const Note: Model<INote> = mongoose.model<INote>("Note", noteSchema);
 
 export default Note;

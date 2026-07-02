@@ -19,12 +19,10 @@ const FavTask = async (
     console.log("favTask id:", id, "favorite:", favorite);
 
     const updatedTask = await noteSchema.findByIdAndUpdate(
-      id,
-      { favorite },
-      {
-        returnDocument: "after",
-      }
-    );
+  id,
+  { favorite },
+  { new: true }
+);
 
     if (!updatedTask) {
       res.status(404).json({
