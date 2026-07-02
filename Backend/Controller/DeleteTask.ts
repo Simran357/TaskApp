@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import noteSchema from "./Schema/index.js";
+import noteSchema from "../Schema/index.js";
 
 interface DeleteTaskParams {
   id: string;
