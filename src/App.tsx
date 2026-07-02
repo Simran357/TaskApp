@@ -1,57 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
+import type {Reducerfn} from "./Utils/Reducer.js";
+import type {Task} from "./Utils/interface.js";
 
-interface Task {
-  id: string;
-  _id: string;
-  task: string;
-  disc: string;
-  completed: boolean;
-  favorite: boolean;
-}
 
-type Action =
-  | { type: "ADD"; payload: Task }
-  | { type: "EDIT"; payload: Task }
-  | { type: "DELETE"; payload: string }
-  | { type: "SET_TASKS"; payload: Task[] }
-  | { type: "TOGGLE_COMPLETE"; payload: string }
-  | { type: "TOGGLE_FAVORITE"; payload: string };
-
-const reducerfn = (tasks: Task[], action: Action): Task[] => {
-  switch (action.type) {
-    case "ADD":
-      return [...tasks, action.payload];
-
-    case "EDIT":
-      return tasks.map((task) =>
-        task.id === action.payload.id ? action.payload : task
-      );
-
-    case "DELETE":
-      return tasks.filter((task) => task.id !== action.payload);
-
-    case "TOGGLE_COMPLETE":
-      return tasks.map((task) =>
-        task.id === action.payload
-          ? { ...task, completed: !task.completed }
-          : task
-      );
-
-    case "TOGGLE_FAVORITE":
-      return tasks.map((task) =>
-        task.id === action.payload
-          ? { ...task, favorite: !task.favorite }
-          : task
-      );
-
-    case "SET_TASKS":
-      return action.payload;
-
-    default:
-      return tasks;
-  }
-};
 
 interface TaskListResponse {
   tasks: Task[];
@@ -63,7 +15,7 @@ interface InputVal {
 }
 
 function App() {
-  const [tasks, dispatch] = useReducer(reducerfn, [] as Task[]);
+  const [tasks, dispatch] = useReducer(Reducerfn, [] as Task[]);
   const [isEdit, setEdited] = useState<string | null>(null);
   const [warning, setWarning] = useState<string>("");
   const [isCompleted, setCompleted] = useState<boolean>(false);

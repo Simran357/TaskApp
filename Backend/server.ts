@@ -1,12 +1,10 @@
-import dns from "dns";
 import express from "express";
+import dotenv from "dotenv";
 import type { Application } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-
 import router from "./Routes/index.js";
-
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+dotenv.config();
 
 const app: Application = express();
 
@@ -21,14 +19,13 @@ app.use(
 
 app.use("/Api", router);
 
-const PORT: number = 5001;
+const PORT: number = parseInt(process.env.PORTNO as string) 
 
-const MONGO_URI =
-  "mongodb+srv://simranjs_db_user:rwyJRG5jQSkdUyZx@cluster0.gkdih35.mongodb.net/";
+const MONGODB_URI = process.env.MONGO_URL
 
 const startServer = async (): Promise<void> => {
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(`${MONGODB_URI}`);
 
     console.log("✅ MongoDB connected");
 

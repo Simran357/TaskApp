@@ -20,7 +20,6 @@ const completeTask = async (
     const updatedTask = await noteSchema.findByIdAndUpdate(
       id,
       { completed },
-      { new: true }
     );
 
     if (!updatedTask) {
