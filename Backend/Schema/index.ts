@@ -1,12 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
+import type { INote } from "../Interfaces/index.js";
 
-export interface INote extends Document {
-  task: string;
-  disc?: string;
-  completed: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 const noteSchema = new mongoose.Schema({
   task: {
