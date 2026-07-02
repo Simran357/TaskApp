@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "tsx watch server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+      "migration:create": "migrate-mongo create -f migrate-mongo-config.cjs",
+  "migration:up": "migrate-mongo up -f migrate-mongo-config.cjs",
+  "migration:down": "migrate-mongo down -f migrate-mongo-config.cjs",
+  "migration:status": "migrate-mongo status -f migrate-mongo-config.cjs"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +19,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "migrate-mongo": "^13.0.2",
     "mongoose": "^9.7.3"
   },
   "devDependencies": {
