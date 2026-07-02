@@ -1,17 +1,9 @@
 
-import type {Task} from "./interface";
-type Action =
-  | { type: "ADD"; payload: Task }
-  | { type: "EDIT"; payload: Task }
-  | { type: "DELETE"; payload: string }
-  | { type: "SET_TASKS"; payload: Task[] }
-  | { type: "TOGGLE_COMPLETE"; payload: string }
-  | { type: "TOGGLE_FAVORITE"; payload: string };
+import type { Task } from "./interface";
 
+import type { Action } from "./interface";
 
-
-
-export const Reducerfn = (tasks: Task[], action: Action): Task[] => {
+export const Reducerfn = (tasks: Task[], action: Action) => {
   switch (action.type) {
     case "ADD":
       return [...tasks, action.payload];

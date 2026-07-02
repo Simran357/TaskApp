@@ -1,18 +1,22 @@
 import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
-import type {Reducerfn} from "./Utils/Reducer.js";
-import type {Task} from "./Utils/interface.js";
+import {Reducerfn} from "./Utils/Reducer.js";
+import type {Task, InputVal} from "./Utils/interface.js";
+import  TaskForm  from "./Components/TaskForm.js";
+import TaskList from "./Components/TaskList";
+import {
+  getTasks,
+  addTask,
+  updateTask,
+  deleteTask,
+  completeTask,
+  favoriteTask,
+} from "./api/TaskApi.js";
+import Button from "./Components/Button.js";
 
 
 
-interface TaskListResponse {
-  tasks: Task[];
-}
 
-interface InputVal {
-  title: string;
-  disc: string;
-}
 
 function App() {
   const [tasks, dispatch] = useReducer(Reducerfn, [] as Task[]);
@@ -28,10 +32,7 @@ function App() {
 
   const GetTask = async (): Promise<void> => {
     try {
-      const response = await axios.get<TaskListResponse>(
-        "http://localhost:5001/Api/GetTask"
-      );
-
+      const response = await getTasks();
       console.log(response.data);
 
       dispatch({
@@ -50,19 +51,15 @@ function App() {
   useEffect(() => {
     console.log("fetching data..");
     GetTask();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const AddTask = async (): Promise<void> => {
     try {
-      const response = await axios.post<TaskListResponse>(
-        "http://localhost:5001/Api/AddTask",
-        {
-          task: inputVal.title,
-          disc: inputVal.disc,
-          status: isCompleted,
-          favorite: false,
-        }
+      const response = await addTask(
+        inputVal.title,
+        inputVal.disc,
+        isCompleted,
+        false
       );
 
       console.log(response.data);
@@ -146,9 +143,7 @@ function App() {
     console.log(task);
 
     try {
-      const res = await axios.delete<TaskListResponse>(
-        `http://localhost:5001/Api/DeleteTask/${task._id}`
-      );
+      const res = await deleteTask(task._id);
       console.log(res);
       await GetTask();
       setInputVal({
@@ -166,12 +161,7 @@ function App() {
     completed: boolean
   ): Promise<void> => {
     try {
-      const res = await axios.put<TaskListResponse>(
-        `http://localhost:5001/Api/completeTask/${id}`,
-        {
-          completed: !completed,
-        }
-      );
+      const res = await completeTask(id, !completed);
       console.log(res);
       await GetTask();
     } catch (error) {
@@ -187,12 +177,7 @@ function App() {
     dispatch({ type: "TOGGLE_FAVORITE", payload: id });
 
     try {
-      const res = await axios.put<TaskListResponse>(
-        `http://localhost:5001/Api/FavTask/${id}`,
-        {
-          favorite: !favorite,
-        }
-      );
+      const res = await favoriteTask(id, !favorite);
       console.log(res);
       await GetTask();
     } catch (error) {
@@ -213,171 +198,39 @@ function App() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        {isEdit ? "Update Task" : "Add Task"}
-      </h2>
-
-      <div className="space-y-4">
-        <input
-          type="text"
-          placeholder="Task"
-          value={inputVal.title}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputVal({
-              ...inputVal,
-              title: e.target.value,
-            });
-
-            if (warning) setWarning("");
-          }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <input
-          type="text"
-          placeholder="Description"
-          value={inputVal.disc}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputVal({
-              ...inputVal,
-              disc: e.target.value,
-            });
-
-            if (warning) setWarning("");
-          }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        {warning && (
-          <div className="mb-4 rounded-md bg-red-100 border border-red-400 text-red-700 px-4 py-2">
-            {warning}
-          </div>
-        )}
-
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          {isEdit ? "Update" : "Add"}
-        </button>
-      </div>
-
+    <TaskForm
+        inputVal={inputVal}
+        setInputVal={setInputVal}
+        warning={warning}
+        setWarning={setWarning}
+        handleSubmit={handleSubmit}
+        isEdit={isEdit !== null}
+      />
       <div className="mt-6 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
           Tasks
         </h3>
 
-        <button
-          onClick={() => setShowFavoritesOnly((prev) => !prev)}
-          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-            showFavoritesOnly
-              ? "bg-yellow-400 text-white hover:bg-yellow-500"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          }`}
-        >
-          {showFavoritesOnly ? "★ Favorites Only" : "☆ Show Favorites Only"}
-        </button>
+    
+<Button
+  variant="warning"
+  onClick={() => setShowFavoritesOnly((prev) => !prev)}
+>
+  {showFavoritesOnly ? "★ Favorites Only" : "☆ Show Favorites"}
+</Button>
       </div>
 
       <div className="mt-4">
         {sortedTasks.length > 0 ? (
           <div className="grid gap-4">
-            {sortedTasks.map((task) => (
-              <div
-                key={task._id}
-                className={`relative rounded-xl border p-5 shadow-sm transition-all duration-300 ${
-                  task.completed
-                    ? "bg-gray-100 border-gray-300"
-                    : task.favorite
-                    ? "bg-yellow-50 border-yellow-300 hover:shadow-lg"
-                    : "bg-white border-gray-200 hover:shadow-lg hover:border-blue-500"
-                }`}
-              >
-                {/* Favorite Star */}
-                <button
-                  onClick={() => HandleFavorite(task._id, task.favorite)}
-                  aria-label={
-                    task.favorite ? "Remove from favorites" : "Add to favorites"
-                  }
-                  className={`absolute top-4 right-4 text-2xl leading-none transition-transform hover:scale-110 ${
-                    task.favorite ? "text-yellow-400" : "text-gray-300"
-                  }`}
-                >
-                  {task.favorite ? "★" : "☆"}
-                </button>
-
-                {/* Title */}
-                <h3
-                  className={`text-xl font-semibold pr-8 ${
-                    task.completed
-                      ? "line-through text-gray-500"
-                      : "text-gray-800"
-                  }`}
-                >
-                  {task.task}
-                </h3>
-
-                {/* Description */}
-                <p
-                  className={`mt-2 text-sm pr-8 ${
-                    task.completed
-                      ? "line-through text-gray-400"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {task.disc}
-                </p>
-
-                {/* Bottom Section */}
-                <div className="mt-5 flex items-center justify-between">
-                  {/* Checkbox */}
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() =>
-                        HandleCompleted(task._id, task.completed)
-                      }
-                      className="h-5 w-5 accent-green-600"
-                    />
-                    <span
-                      className={`font-medium ${
-                        task.completed ? "text-green-600" : "text-gray-700"
-                      }`}
-                    >
-                      {task.completed ? "Completed ✅" : "Mark Complete"}
-                    </span>
-                  </label>
-
-                  {/* Buttons */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEdit(task)}
-                      disabled={task.completed}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                        task.completed
-                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-blue-500 text-white hover:bg-blue-600"
-                      }`}
-                    >
-                      ✏️ Edit
-                    </button>
-
-                    <button
-                      onClick={() => handleDelete(task)}
-                      disabled={task.completed}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                        task.completed
-                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-red-500 text-white hover:bg-red-600"
-                      }`}
-                    >
-                      🗑 Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <TaskList
+  tasks={sortedTasks}
+  showFavoritesOnly={showFavoritesOnly}
+  onEdit={handleEdit}
+  onDelete={handleDelete}
+  onComplete={HandleCompleted}
+  onFavorite={HandleFavorite}
+/>
           </div>
         ) : (
           <div className="rounded-lg border-2 border-dashed border-gray-300 p-10 text-center">

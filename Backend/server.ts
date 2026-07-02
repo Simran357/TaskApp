@@ -19,12 +19,11 @@ app.use(
 
 app.use("/Api", router);
 
-const PORT: number = parseInt(process.env.PORTNO as string) 
-
-const MONGODB_URI = process.env.MONGO_URL
-
+const PORT = parseInt(process.env.PORTNo as string, 10);
+const MONGODB_URI = process.env.MONGODB_URL;
 const startServer = async (): Promise<void> => {
   try {
+    console.log(process.env.MONGO_URI);
     await mongoose.connect(`${MONGODB_URI}`);
 
     console.log("✅ MongoDB connected");
