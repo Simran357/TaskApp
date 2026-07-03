@@ -28,13 +28,7 @@ export interface TaskListProps {
   onComplete: (id: string, completed: boolean) => void;
   onFavorite: (id: string, favorite: boolean) => void;
 }
-export interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  variant?: "primary" | "danger" | "secondary" | "warning";
-  className?: string;
-}
+
 
 export interface InputVal {
   title: string;
