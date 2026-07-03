@@ -8,6 +8,7 @@ const TaskList = ({
   onDelete,
   onComplete,
   onFavorite,
+  isEdit
 }: TaskListProps) => {
   if (tasks.length === 0) {
     return (
@@ -33,6 +34,7 @@ const TaskList = ({
           onDelete={onDelete}
           onComplete={onComplete}
           onFavorite={onFavorite}
+          isEdit={isEdit}
         />
       ))}
     </div>

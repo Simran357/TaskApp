@@ -18,7 +18,8 @@ export const useTasks = () => {
     title: "",
     disc: "",
   });
-
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 const fetchTasks = async () => {
   const res = await getTasks();
   console.log("GET TASKS RESPONSE");
@@ -81,6 +82,20 @@ const fetchTasks = async () => {
   await favoriteTask(id, !favorite);
   await fetchTasks();
 };
+const confirmDelete = async () => {
+  if (!taskToDelete) return;
+
+  await deleteTask(taskToDelete._id);
+  await fetchTasks();
+
+  setTaskToDelete(null);
+  setShowDeleteModal(false);
+  setIsEdit(null);
+};
+const cancelDelete = () => {
+  setTaskToDelete(null);
+  setShowDeleteModal(false);
+};
 
   return {
     tasks,
@@ -94,5 +109,8 @@ const fetchTasks = async () => {
     handleDelete,
     handleCompleted,
     handleFavorite,
+      showDeleteModal,
+  confirmDelete,
+  cancelDelete,
   };
 };

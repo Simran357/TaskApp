@@ -27,6 +27,8 @@ export interface TaskListProps {
   onDelete: (task: Task) => void;
   onComplete: (id: string, completed: boolean) => void;
   onFavorite: (id: string, favorite: boolean) => void;
+     isEdit: string | null;
+
 }
 
 export interface InputVal {
@@ -40,6 +42,7 @@ export interface TaskCardProps {
   onDelete: (task: Task) => void;
   onComplete: (id: string, completed: boolean) => void;
   onFavorite: (id: string, favorite: boolean) => void;
+   isEdit: string | null;
 }
 
 export interface TaskFormProps {

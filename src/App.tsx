@@ -55,6 +55,7 @@ function App() {
           onDelete={handleDelete}
           onComplete={handleCompleted}
           onFavorite={handleFavorite}
+            isEdit={isEdit}
         />
       </div>
     </div>

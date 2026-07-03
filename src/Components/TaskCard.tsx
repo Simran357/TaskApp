@@ -3,6 +3,7 @@ import Button from "./button";
 const TaskCard = ({
   task,
   onEdit,
+  isEdit,
   onDelete,
   onComplete,
   onFavorite,
@@ -49,22 +50,30 @@ const TaskCard = ({
           {task.completed ? "Completed ✅" : "Mark Complete"}
         </label>
 
-        <div className="flex gap-2">
-          <Button
-            variant="primary"
-            onClick={() => onEdit(task)}
-            disabled={task.completed}
-          >
-            ✏️ Edit
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => onDelete(task)}
-            disabled={task.completed}
-          >
-            🗑 Delete
-          </Button>
-        </div>
+        <div className="flex gap-2 items-center">
+  {isEdit === task._id ? (
+    <p className="text-yellow-500 font-bold animate-pulse">
+      ✏️ Editing...
+    </p>
+  ) : (<>
+    <Button
+      variant="primary"
+      onClick={() => onEdit(task)}
+      disabled={task.completed}
+    >
+      ✏️ Edit
+    </Button>
+     <Button
+    variant="danger"
+    onClick={() => onDelete(task)}
+    disabled={task.completed}
+  >
+    🗑 Delete
+  </Button>
+ </> )}
+
+ 
+</div>
       </div>
     </div>
   );
