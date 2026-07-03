@@ -15,16 +15,13 @@ export const AddTask = async (req: Request, res: Response): Promise<void> => {
   }
   try {
     console.log(req.body);
-    const { error, value } = createNoteValidation.validate(req.body, {
-  abortEarly: false,
-});
+    const { error, value } = createNoteValidation.validate(req.body);
     if (error) {
       res.status(400).json({
         success: false,
         message: "Validation failed",
         errors: error.details.map((e) => e.message),
       });
-      return;
     }
     const dbData = await noteSchema.create(value);
     res.status(201).json({
@@ -118,9 +115,7 @@ export const FavTask = async (
   try {
     const { id } = req.params;
     const { favorite } = req.body;
-
     console.log("favTask id:", id, "favorite:", favorite);
-
     const updatedTask = await noteSchema.findByIdAndUpdate(
   id,
   { favorite },
