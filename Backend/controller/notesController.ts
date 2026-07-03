@@ -22,6 +22,7 @@ export const AddTask = async (req: Request, res: Response): Promise<void> => {
         message: "Validation failed",
         errors: error.details.map((e) => e.message),
       });
+      return
     }
     const dbData = await noteSchema.create(value);
     res.status(201).json({
@@ -46,6 +47,7 @@ export const completeTask = async (
       success: false,
       message: "Request body is required.",
     });
+       return
   }
   try {
     const { id } = req.params;
@@ -111,6 +113,7 @@ export const FavTask = async (
       success: false,
       message: "Request body is required.",
     });
+       return
   }
   try {
     const { id } = req.params;
@@ -166,6 +169,7 @@ export const UpdateTask = async (
       success: false,
       message: "Request body is required.",
     });
+    return;
   }
   try {
     const { id } = req.params;

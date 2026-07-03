@@ -24,9 +24,21 @@ const TaskForm = ({
               ...prev,
               title: e.target.value,
             }));
-
+             
             if (warning) setWarning("");
           }}
+          onBlur={() => {
+  if (!inputVal.title.trim()) {
+    setWarning("Task is required");
+  } else {
+    setWarning("");
+  }
+}}
+onKeyDown={(e) => {
+  if (e.key === "Enter") {
+    handleSubmit();
+  }
+}}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
@@ -40,13 +52,27 @@ const TaskForm = ({
             }));
             if (warning) setWarning("");
           }}
+          onBlur={() => {
+  if (!inputVal.title.trim()) {
+    setWarning("Task is required");
+  } else {
+    setWarning("");
+  }
+}}
+onKeyDown={(e) => {
+  if (e.key === "Enter") {
+    handleSubmit();
+  }
+}}
+
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        {warning && (
-          <div className="rounded-md bg-red-100 border border-red-400 text-red-700 px-4 py-2">
-            {warning}
-          </div>
-        )}
+
+       {warning && (
+  <div className="rounded-md bg-red-100 border border-red-400 text-red-700 px-4 py-2">
+    {warning}
+  </div>
+)}
         <Button variant="primary" onClick={handleSubmit} className="w-full">
           {isEdit ? "Update" : "Add"}
         </Button>
