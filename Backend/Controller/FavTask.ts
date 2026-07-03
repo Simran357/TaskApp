@@ -1,13 +1,6 @@
 import type { Request, Response } from "express";
 import noteSchema from "../schema/index.js";
-interface FavTaskParams {
-  id: string;
-}
-
-interface FavTaskBody {
-  favorite: boolean;
-}
-
+import type { FavTaskParams, FavTaskBody } from "../interfaces/index.js";
 const FavTask = async (
   req: Request<FavTaskParams, {}, FavTaskBody>,
   res: Response

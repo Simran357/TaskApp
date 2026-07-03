@@ -29,7 +29,6 @@ export interface TaskListProps {
   onFavorite: (id: string, favorite: boolean) => void;
 }
 
-
 export interface InputVal {
   title: string;
   disc: string;

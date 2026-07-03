@@ -57,7 +57,6 @@ const fetchTasks = async () => {
 
   const handleEdit = (task: Task) => {
     if (task.completed) return;
-
     setIsEdit(task.id);
     setInputVal({
       title: task.task,

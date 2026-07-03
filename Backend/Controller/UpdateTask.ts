@@ -1,17 +1,6 @@
 import type { Request, Response } from "express";
-
+import type { UpdateTaskParams, UpdateTaskBody } from "../interfaces/index.js";
 import noteSchema from "../schema/index.js";
-
-interface UpdateTaskParams {
-  id: string;
-}
-
-interface UpdateTaskBody {
-  task?: string;
-  disc?: string;
-  completed?: boolean;
-  favorite?: boolean;
-}
 
 const UpdateTask = async (
   req: Request<UpdateTaskParams, {}, UpdateTaskBody>,
@@ -19,19 +8,16 @@ const UpdateTask = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-
     const updatedTask = await noteSchema.findOneAndUpdate(
       { _id: id },
       req.body,
     );
-
     if (!updatedTask) {
       res.status(404).json({
         message: "Task not found",
       });
       return;
     }
-
     res.status(200).json({
       message: "Task updated successfully",
       data: updatedTask,

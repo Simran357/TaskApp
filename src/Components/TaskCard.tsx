@@ -25,7 +25,6 @@ const TaskCard = ({
       >
         {task.favorite ? "★" : "☆"}
       </button>
-
       <h3
         className={`text-xl font-semibold ${
           task.completed ? "line-through text-gray-500" : ""
@@ -33,7 +32,6 @@ const TaskCard = ({
       >
         {task.task}
       </h3>
-
       <p
         className={`mt-2 ${
           task.completed ? "line-through text-gray-400" : "text-gray-600"
@@ -41,7 +39,6 @@ const TaskCard = ({
       >
         {task.disc}
       </p>
-
       <div className="mt-5 flex justify-between items-center">
         <label className="flex gap-2 items-center">
           <input
@@ -49,7 +46,6 @@ const TaskCard = ({
             checked={task.completed}
             onChange={() => onComplete(task._id, task.completed)}
           />
-
           {task.completed ? "Completed ✅" : "Mark Complete"}
         </label>
 
@@ -61,7 +57,6 @@ const TaskCard = ({
           >
             ✏️ Edit
           </Button>
-
           <Button
             variant="danger"
             onClick={() => onDelete(task)}

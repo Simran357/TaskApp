@@ -4,7 +4,6 @@ import noteSchema from "../schema/index.js";
 const GetTask = async (_req: Request, res: Response): Promise<void> => {
   try {
     const dbData = await noteSchema.find();
-
     res.status(200).json({
       message: "Task fetched successfully",
       tasks: dbData,

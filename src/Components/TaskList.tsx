@@ -1,8 +1,6 @@
 import TaskCard from "./TaskCard";
 import type { TaskListProps } from "../utils/Interface";
 
-
-
 const TaskList = ({
   tasks,
   showFavoritesOnly,
@@ -17,7 +15,6 @@ const TaskList = ({
         <h2 className="text-xl font-semibold text-gray-500">
           {showFavoritesOnly ? "No favorites yet ⭐" : "No tasks yet 📒"}
         </h2>
-
         <p className="mt-2 text-gray-400">
           {showFavoritesOnly
             ? "Star a task to see it here."
@@ -26,7 +23,6 @@ const TaskList = ({
       </div>
     );
   }
-
   return (
     <div className="grid gap-4">
       {tasks.map((task) => (

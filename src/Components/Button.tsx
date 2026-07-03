@@ -1,8 +1,6 @@
 import React from "react";
 import type { ButtonProps } from "../utils/Interface";
 
-
-
 const Button = ({
   children,
   onClick,

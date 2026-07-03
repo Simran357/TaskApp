@@ -1,9 +1,6 @@
 import type { Request, Response } from "express";
 import noteSchema from "../schema/index.js";
-
-interface DeleteTaskParams {
-  id: string;
-}
+import type { DeleteTaskParams } from "../interfaces/index.js";
 
 const DeleteTask = async (
   req: Request<DeleteTaskParams>,
@@ -11,18 +8,14 @@ const DeleteTask = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-
     console.log("Delete task id:", id);
-
     const deletedTask = await noteSchema.findByIdAndDelete(id);
-
     if (!deletedTask) {
       res.status(404).json({
         message: "Task not found",
       });
       return;
     }
-
     res.status(200).json({
       message: "Task deleted successfully",
       data: deletedTask,
