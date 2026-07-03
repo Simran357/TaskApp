@@ -1,8 +1,8 @@
 import { useState } from "react";
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
-import { useTasks } from "./hooks/UseTaskHook";
-import Button from "./components/Button";
+import TaskForm from "./components/taskForm";
+import TaskList from "./components/taskList";
+import { useTasks } from "./hooks/useTaskHook";
+import Button from "./components/button";
 function App() {
   const {
     tasks,

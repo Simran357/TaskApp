@@ -1,6 +1,6 @@
-import type { TaskFormProps } from "../utils/Interface";
+import type { TaskFormProps } from "../utils/interface";
 
-import Button from "./Button.jsx";
+import Button from "./button";
 const TaskForm = ({
   inputVal,
   setInputVal,

@@ -1,6 +1,6 @@
 
-import type { Task } from "./Interface";
-import type { Action } from "./Interface";
+import type { Task } from "./interface";
+import type { Action } from "./interface";
 
 export const Reducerfn = (tasks: Task[], action: Action) => {
   switch (action.type) {

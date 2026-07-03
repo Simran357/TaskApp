@@ -1,5 +1,5 @@
 import React from "react";
-import type { ButtonProps } from "../utils/Interface";
+import type { ButtonProps } from "../utils/interface";
 
 const Button = ({
   children,

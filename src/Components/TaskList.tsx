@@ -1,5 +1,5 @@
-import TaskCard from "./TaskCard";
-import type { TaskListProps } from "../utils/Interface";
+import TaskCard from "./taskCard";
+import type { TaskListProps } from "../utils/interface";
 
 const TaskList = ({
   tasks,

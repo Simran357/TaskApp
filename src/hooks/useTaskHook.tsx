@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
-import { Reducerfn } from "../utils/Reducer";
-import type { Task, InputVal } from "../utils/Interface.js";
+import { Reducerfn } from "../utils/reducer";
+import type { Task, InputVal } from "../utils/interface.js";
 import {
   getTasks,
   addTask,
@@ -8,7 +8,7 @@ import {
   deleteTask,
   completeTask,
   favoriteTask,
-} from "../api/TaskApi";
+} from "../api/taskApi";
 
 export const useTasks = () => {
   const [tasks, dispatch] = useReducer(Reducerfn, [] as Task[]);

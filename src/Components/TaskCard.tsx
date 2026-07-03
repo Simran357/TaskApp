@@ -1,5 +1,5 @@
-import type {  TaskCardProps } from "../utils/Interface";
-import Button from "./Button";
+import type {  TaskCardProps } from "../utils/interface";
+import Button from "./button";
 const TaskCard = ({
   task,
   onEdit,
