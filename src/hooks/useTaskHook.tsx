@@ -36,7 +36,6 @@ export const useTasks = () => {
 
   const handleSubmit = async () => {
     if (!inputVal.title.trim() || !inputVal.disc.trim()) {
-      setWarning("⚠️ Please fill all fields");
       return;
     }
     setWarning("");
@@ -96,7 +95,6 @@ export const useTasks = () => {
           onClick={async () => {
             await deleteTask(task._id);
             await fetchTasks();
-
             toast.dismiss(t.id);
             toast.success("Task deleted!");
           }}

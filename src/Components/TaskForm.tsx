@@ -24,23 +24,32 @@ const TaskForm = ({
               ...prev,
               title: e.target.value,
             }));
-             
+
             if (warning) setWarning("");
           }}
           onBlur={() => {
-  if (!inputVal.title.trim()) {
-    setWarning("Task is required");
-  } else {
-    setWarning("");
-  }
-}}
-onKeyDown={(e) => {
-  if (e.key === "Enter") {
-    handleSubmit();
-  }
-}}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+            if (!inputVal.title.trim()) {
+              setWarning("Task is required");
+            } else {
+              setWarning("");
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit();
+            }
+          }}
+  className={`w-full px-4 py-2 rounded-lg border transition-all duration-200
+${
+  warning === "Task is required"
+    ? "border-red-500 bg-red-50 placeholder-red-400 focus:ring-2 focus:ring-red-300 animate-pulse"
+    : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+}`}/>
+        {warning === "Task is required" && (
+          <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
+            ⚠️ Task is required
+          </p>
+        )}
         <input
           type="text"
           placeholder="Description"
@@ -53,26 +62,27 @@ onKeyDown={(e) => {
             if (warning) setWarning("");
           }}
           onBlur={() => {
-  if (!inputVal.title.trim()) {
-    setWarning("Task is required");
-  } else {
-    setWarning("");
-  }
-}}
-onKeyDown={(e) => {
-  if (e.key === "Enter") {
-    handleSubmit();
-  }
-}}
-
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-       {warning && (
-  <div className="rounded-md bg-red-100 border border-red-400 text-red-700 px-4 py-2">
-    {warning}
-  </div>
-)}
+            if (!inputVal.disc.trim()) {
+              setWarning("Description is required");
+            } else {
+              setWarning("");
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit();
+            }
+          }}
+          className={`w-full px-4 py-2 rounded-lg border transition-all duration-200
+    ${warning === "Description is required"
+              ? "border-red-500 bg-red-50 placeholder-red-400 focus:ring-2 focus:ring-red-300 animate-pulse"
+              : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+            }`} />
+        {warning === "Description is required" && (
+          <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
+            ⚠️ Description is required
+          </p>
+        )}
         <Button variant="primary" onClick={handleSubmit} className="w-full">
           {isEdit ? "Update" : "Add"}
         </Button>
