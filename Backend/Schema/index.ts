@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import type { INote } from "../Interfaces/index.js";
+import type { INote } from "../interfaces/index.js";
 
 
 const noteSchema = new mongoose.Schema({
