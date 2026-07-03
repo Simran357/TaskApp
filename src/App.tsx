@@ -24,9 +24,7 @@ function App() {
     ? tasks.filter((t) => t.favorite)
     : tasks;
 
-const sortedTasks = [...visibleTasks].sort(
-  (a, b) => Number(b.favorite) - Number(a.favorite)
-);
+const sortedTasks =visibleTasks
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
 
@@ -44,12 +42,17 @@ const sortedTasks = [...visibleTasks].sort(
     Tasks
   </h3>
 
-  <Button
-    variant="warning"
-    onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-  >
-    {showFavoritesOnly ? "Show All" : "⭐ Favorites"}
-  </Button>
+ <Button
+  variant="secondary"
+  onClick={() => setShowFavoritesOnly((prev) => !prev)}
+  className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
+    showFavoritesOnly
+      ? "bg-yellow-400 text-white hover:bg-yellow-500"
+      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+  }`}
+>
+  {showFavoritesOnly ? "★ Favorites Only" : "☆ Show Favorites Only"}
+</Button>
 </div>
 
       <div className="mt-4">
