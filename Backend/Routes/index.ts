@@ -8,13 +8,14 @@ import {
   completeTask,
   FavTask,
 } from "../controller/notesController.js";
+import { validateRequestBody } from "../middlware/validatedRequestBody.js";
 const router = express.Router();
 
-router.post("/AddTask", AddTask);
+router.post("/AddTask",validateRequestBody, AddTask);
 router.get("/GetTask", GetTask);
-router.put("/UpdateTask/:id", UpdateTask);
+router.put("/UpdateTask/:id", validateRequestBody, UpdateTask);
 router.delete("/DeleteTask/:id", DeleteTask);
-router.put("/completeTask/:id", completeTask);
-router.put("/FavTask/:id", FavTask);
+router.put("/completeTask/:id", validateRequestBody, completeTask);
+router.put("/FavTask/:id", validateRequestBody, FavTask);
 console.log("Router is working");
 export default router;

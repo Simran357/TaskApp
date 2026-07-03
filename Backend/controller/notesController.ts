@@ -1,18 +1,14 @@
 import type { Request, Response } from "express";
 import noteSchema from "../schema/index.js";
 import { createNoteValidation } from "../validation/noteValidations.js";
-import type { CompleteTaskParams, CompleteTaskBody } from "../interfaces/index.js";
+import type { CompleteTaskBody } from "../interfaces/index.js";
 import type { DeleteTaskParams } from "../interfaces/index.js";
-import type { FavTaskParams, FavTaskBody } from "../interfaces/index.js";
-
+import type { FavTaskBody } from "../interfaces/index.js";
+import { validateRequestBody } from "../middlware/validatedRequestBody.js";
+import type {  UpdateTaskBody } from "../interfaces/index.js";
 
 export const AddTask = async (req: Request, res: Response): Promise<void> => {
-    if (!req.body || Object.keys(req.body).length === 0) {
-     res.status(400).json({
-      success: false,
-      message: "Request body is required.",
-    });
-  }
+
   try {
     console.log(req.body);
     const { error, value } = createNoteValidation.validate(req.body);
@@ -39,16 +35,10 @@ export const AddTask = async (req: Request, res: Response): Promise<void> => {
 
 
 export const completeTask = async (
-  req: Request<CompleteTaskParams, {}, CompleteTaskBody>,
+  req: Request<{ id: string }, {}, CompleteTaskBody>,
   res: Response
 ): Promise<void> => {
-    if (!req.body || Object.keys(req.body).length === 0) {
-     res.status(400).json({
-      success: false,
-      message: "Request body is required.",
-    });
-       return
-  }
+ 
   try {
     const { id } = req.params;
     const { completed } = req.body;
@@ -105,16 +95,10 @@ export const DeleteTask = async (
 };
 
 export const FavTask = async (
-  req: Request<FavTaskParams, {}, FavTaskBody>,
+  req: Request<{ id: string }, {}, FavTaskBody>,
   res: Response
 ): Promise<void> => {
-    if (!req.body || Object.keys(req.body).length === 0) {
-     res.status(400).json({
-      success: false,
-      message: "Request body is required.",
-    });
-       return
-  }
+   
   try {
     const { id } = req.params;
     const { favorite } = req.body;
@@ -158,19 +142,12 @@ export const GetTask = async (_req: Request, res: Response): Promise<void> => {
   }
 };
 
-import type { UpdateTaskParams, UpdateTaskBody } from "../interfaces/index.js";
 
 export const UpdateTask = async (
-  req: Request<UpdateTaskParams, {}, UpdateTaskBody>,
+  req: Request<{ id: string }, {}, UpdateTaskBody>,
   res: Response
 ): Promise<void> => {
-    if (!req.body || Object.keys(req.body).length === 0) {
-     res.status(400).json({
-      success: false,
-      message: "Request body is required.",
-    });
-    return;
-  }
+ 
   try {
     const { id } = req.params;
     const updatedTask = await noteSchema.findOneAndUpdate(
