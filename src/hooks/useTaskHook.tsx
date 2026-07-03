@@ -1,7 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import { Reducerfn } from "../utils/Reducer";
 import type { Task, InputVal } from "../utils/Interface.js";
-
 import {
   getTasks,
   addTask,
@@ -15,7 +14,6 @@ export const useTasks = () => {
   const [tasks, dispatch] = useReducer(Reducerfn, [] as Task[]);
   const [isEdit, setIsEdit] = useState<string | null>(null);
   const [warning, setWarning] = useState("");
-
   const [inputVal, setInputVal] = useState<InputVal>({
     title: "",
     disc: "",
@@ -23,10 +21,7 @@ export const useTasks = () => {
 
 const fetchTasks = async () => {
   const res = await getTasks();
-
   console.log("GET TASKS RESPONSE");
- 
-
   dispatch({
     type: "SET_TASKS",
     payload: res.data.tasks.map((task: Task) => ({
@@ -45,18 +40,14 @@ const fetchTasks = async () => {
       setWarning("⚠️ Please fill all fields");
       return;
     }
-
     setWarning("");
-
     try {
       if (isEdit) {
         await updateTask(isEdit, inputVal.title, inputVal.disc);
       } else {
         await addTask(inputVal.title, inputVal.disc, false, false);
       }
-
       await fetchTasks();
-
       setInputVal({ title: "", disc: "" });
       setIsEdit(null);
     } catch (err) {
@@ -76,10 +67,8 @@ const fetchTasks = async () => {
 
   const handleDelete = async (task: Task) => {
     if (task.completed) return;
-
     await deleteTask(task._id);
     await fetchTasks();
-
     setIsEdit(null);
   };
 
@@ -90,9 +79,7 @@ const fetchTasks = async () => {
 
   const handleFavorite = async (id: string, favorite: boolean) => {
   console.log("Clicked:", id, favorite);
-
   await favoriteTask(id, !favorite);
-
   await fetchTasks();
 };
 
