@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Task, TaskListResponse } from "../Utils/interface";
+import type {  TaskListResponse } from "../utils/Interface";
 
 const API = axios.create({
   baseURL: "http://localhost:5001/Api",

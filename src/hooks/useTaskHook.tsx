@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
-import { Reducerfn } from "../Utils/Reducer";
-import type { Task, InputVal } from "../Utils/interface";
+import { Reducerfn } from "../utils/Reducer";
+import type { Task, InputVal } from "../utils/Interface.js";
 
 import {
   getTasks,

@@ -19,23 +19,22 @@ app.use(
 
 app.use("/Api", router);
 
-const PORT = parseInt(process.env.PORTNo as string, 10);
-const MONGODB_URI = process.env.MONGODB_URL;
+const PORT = parseInt(process.env.PORT as string, 10);
+const DATABASE_URL = process.env.DATABASE_URL;
 const startServer = async (): Promise<void> => {
   try {
-    console.log(process.env.MONGO_URI);
-    await mongoose.connect(`${MONGODB_URI}`);
+    await mongoose.connect(`${DATABASE_URL}`);
 
-    console.log("✅ MongoDB connected");
+    console.log("MongoDB connected");
 
     app.listen(PORT, () => {
-      console.log(`🚀 Server is running on http://localhost:${PORT}`);
+      console.log(" Server is running");
     });
   } catch (error) {
     if (error instanceof Error) {
-      console.error("❌ MongoDB connection error:", error.message);
+      console.error(" MongoDB connection error:", error.message);
     } else {
-      console.error("❌ Unknown error:", error);
+      console.error(" Unknown error:", error);
     }
   }
 };

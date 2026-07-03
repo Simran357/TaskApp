@@ -1,22 +1,6 @@
-import React from "react";
-import Button from "./Button";
-interface TaskFormProps {
-  inputVal: {
-    title: string;
-    disc: string;
-  };
-  setInputVal: React.Dispatch<
-    React.SetStateAction<{
-      title: string;
-      disc: string;
-    }>
-  >;
-  warning: string;
-  setWarning: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: () => void;
-  isEdit: boolean;
-}
+import type { TaskFormProps } from "../utils/Interface";
 
+import Button from "./Button.jsx";
 const TaskForm = ({
   inputVal,
   setInputVal,
