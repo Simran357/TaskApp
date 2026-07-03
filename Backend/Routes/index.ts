@@ -8,7 +8,7 @@ import {
   completeTask,
   FavTask,
 } from "../controller/notesController.js";
-import { validateRequestBody } from "../middlware/validatedRequestBody.js";
+import { validateRequestBody } from "../utils/validatedRequestBody.js";
 const router = express.Router();
 
 router.post("/AddTask",validateRequestBody, AddTask);

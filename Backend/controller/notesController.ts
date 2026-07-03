@@ -4,7 +4,7 @@ import { createNoteValidation } from "../validation/noteValidations.js";
 import type { CompleteTaskBody } from "../interfaces/index.js";
 import type { DeleteTaskParams } from "../interfaces/index.js";
 import type { FavTaskBody } from "../interfaces/index.js";
-import { validateRequestBody } from "../middlware/validatedRequestBody.js";
+import { validateRequestBody } from "../utils/validatedRequestBody.js";
 import type {  UpdateTaskBody } from "../interfaces/index.js";
 
 export const AddTask = async (req: Request, res: Response): Promise<void> => {

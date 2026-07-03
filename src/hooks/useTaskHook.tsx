@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from "react";
-import { Reducerfn } from "../utils/reducer";
+import { Reducerfn } from "../utils/reducer.js";
 import type { Task, InputVal } from "../utils/interface.js";
 import {
   getTasks,
@@ -9,7 +9,7 @@ import {
   completeTask,
   favoriteTask,
 } from "../api/taskApi";
-
+import toast from "react-hot-toast";
 export const useTasks = () => {
   const [tasks, dispatch] = useReducer(Reducerfn, [] as Task[]);
   const [isEdit, setIsEdit] = useState<string | null>(null);
@@ -18,20 +18,18 @@ export const useTasks = () => {
     title: "",
     disc: "",
   });
-const [showDeleteModal, setShowDeleteModal] = useState(false);
-const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
-const fetchTasks = async () => {
-  const res = await getTasks();
-  console.log("GET TASKS RESPONSE");
-  dispatch({
-    type: "SET_TASKS",
-    payload: res.data.tasks.map((task: Task) => ({
-      ...task,
-      id: task._id,
-      favorite: task.favorite ?? false,
-    })),
-  });
-};
+  const fetchTasks = async () => {
+    const res = await getTasks();
+    console.log("GET TASKS RESPONSE");
+    dispatch({
+      type: "SET_TASKS",
+      payload: res.data.tasks.map((task: Task) => ({
+        ...task,
+        id: task._id,
+        favorite: task.favorite ?? false,
+      })),
+    });
+  };
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -65,12 +63,7 @@ const fetchTasks = async () => {
     });
   };
 
-  const handleDelete = async (task: Task) => {
-    if (task.completed) return;
-    await deleteTask(task._id);
-    await fetchTasks();
-    setIsEdit(null);
-  };
+
 
   const handleCompleted = async (id: string, completed: boolean) => {
     await completeTask(id, !completed);
@@ -78,23 +71,41 @@ const fetchTasks = async () => {
   };
 
   const handleFavorite = async (id: string, favorite: boolean) => {
-  console.log("Clicked:", id, favorite);
-  await favoriteTask(id, !favorite);
-  await fetchTasks();
-};
-const confirmDelete = async () => {
-  if (!taskToDelete) return;
+    console.log("Clicked:", id, favorite);
+    await favoriteTask(id, !favorite);
+    await fetchTasks();
+  };
 
-  await deleteTask(taskToDelete._id);
-  await fetchTasks();
+ const onDelete = (task: Task) => {
+  toast((t) => (
+    <div className="flex flex-col gap-3">
+      <p className="font-semibold">
+        Are you sure you want to delete this task?
+      </p>
 
-  setTaskToDelete(null);
-  setShowDeleteModal(false);
-  setIsEdit(null);
-};
-const cancelDelete = () => {
-  setTaskToDelete(null);
-  setShowDeleteModal(false);
+      <div className="flex justify-end gap-2">
+        <button
+          onClick={() => toast.dismiss(t.id)}
+          className="px-3 py-1 rounded bg-gray-200"
+        >
+          Cancel
+        </button>
+
+        <button
+          className="px-3 py-1 rounded bg-red-500 text-white"
+          onClick={async () => {
+            await deleteTask(task._id);
+            await fetchTasks();
+
+            toast.dismiss(t.id);
+            toast.success("Task deleted!");
+          }}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  ));
 };
 
   return {
@@ -106,11 +117,11 @@ const cancelDelete = () => {
     isEdit,
     handleSubmit,
     handleEdit,
-    handleDelete,
     handleCompleted,
     handleFavorite,
-      showDeleteModal,
-  confirmDelete,
-  cancelDelete,
+    fetchTasks,
+    setIsEdit,
+    onDelete
+
   };
 };

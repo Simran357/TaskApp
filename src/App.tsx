@@ -3,6 +3,7 @@ import TaskForm from "./components/taskForm";
 import TaskList from "./components/taskList";
 import { useTasks } from "./hooks/useTaskHook";
 import Button from "./components/button";
+import { Toaster } from "react-hot-toast";
 function App() {
   const {
     tasks,
@@ -13,7 +14,7 @@ function App() {
     isEdit,
     handleSubmit,
     handleEdit,
-    handleDelete,
+    onDelete,
     handleCompleted,
     handleFavorite,
   } = useTasks();
@@ -24,6 +25,7 @@ function App() {
   const sortedTasks = visibleTasks
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+      <Toaster position="top-center" reverseOrder={false} />
       <TaskForm
         inputVal={inputVal}
         setInputVal={setInputVal}
@@ -52,7 +54,7 @@ function App() {
           tasks={sortedTasks}
           showFavoritesOnly={showFavoritesOnly}
           onEdit={handleEdit}
-          onDelete={handleDelete}
+          onDelete={onDelete}
           onComplete={handleCompleted}
           onFavorite={handleFavorite}
             isEdit={isEdit}
