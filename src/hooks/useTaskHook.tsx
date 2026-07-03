@@ -62,8 +62,6 @@ export const useTasks = () => {
     });
   };
 
-
-
   const handleCompleted = async (id: string, completed: boolean) => {
     await completeTask(id, !completed);
     await fetchTasks();
@@ -81,7 +79,6 @@ export const useTasks = () => {
       <p className="font-semibold">
         Are you sure you want to delete this task?
       </p>
-
       <div className="flex justify-end gap-2">
         <button
           onClick={() => toast.dismiss(t.id)}

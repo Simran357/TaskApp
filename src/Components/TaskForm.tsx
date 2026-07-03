@@ -39,12 +39,11 @@ const TaskForm = ({
               handleSubmit();
             }
           }}
-  className={`w-full px-4 py-2 rounded-lg border transition-all duration-200
-${
-  warning === "Task is required"
-    ? "border-red-500 bg-red-50 placeholder-red-400 focus:ring-2 focus:ring-red-300 animate-pulse"
-    : "border-gray-300 focus:ring-2 focus:ring-blue-500"
-}`}/>
+          className={`w-full px-4 py-2 rounded-lg border transition-all duration-200
+${warning === "Task is required"
+              ? "border-red-500 bg-red-50 placeholder-red-400 focus:ring-2 focus:ring-red-300 animate-pulse"
+              : "border-gray-300 focus:ring-2 focus:ring-blue-500"
+            }`} />
         {warning === "Task is required" && (
           <p className="mt-1 text-sm text-red-500 flex items-center gap-1">
             ⚠️ Task is required
