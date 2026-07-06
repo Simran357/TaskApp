@@ -26,11 +26,8 @@ const startServer = async (): Promise<void> => {
       console.log(" Server is running");
     });
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(" MongoDB connection error:", error.message);
-    } else {
-      console.error(" Unknown error:", error);
-    }
+      console.error(" Mongodb error:", error);
+    
   }
 };
 
