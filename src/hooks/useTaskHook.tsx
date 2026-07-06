@@ -35,10 +35,17 @@ export const useTasks = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!inputVal.title.trim() || !inputVal.disc.trim()) {
-      return;
-    }
-    setWarning("");
+   if (!inputVal.title.trim()) {
+    setWarning("Task is required");
+    return;
+  }
+
+  if (!inputVal.disc.trim()) {
+    setWarning("Description is required");
+    return;
+  }
+
+  setWarning("");
     try {
       if (isEdit) {
         await updateTask(isEdit, inputVal.title, inputVal.disc);
