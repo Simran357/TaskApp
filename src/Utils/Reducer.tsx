@@ -1,6 +1,5 @@
 
-import type { Task } from "./interface";
-import type { Action } from "./interface";
+import type { Task ,Action} from "./interface";
 
 export const Reducerfn = (tasks: Task[], action: Action) => {
   switch (action.type) {
@@ -8,19 +7,19 @@ export const Reducerfn = (tasks: Task[], action: Action) => {
       return [...tasks, action.payload];
     case "EDIT":
       return tasks.map((task) =>
-        task.id === action.payload.id ? action.payload : task
+        task._id === action.payload._id ? action.payload : task
       );
     case "DELETE":
-      return tasks.filter((task) => task.id !== action.payload);
+      return tasks.filter((task) => task._id !== action.payload);
     case "TOGGLE_COMPLETE":
       return tasks.map((task) =>
-        task.id === action.payload
+        task._id === action.payload
           ? { ...task, completed: !task.completed }
           : task
       );
     case "TOGGLE_FAVORITE":
       return tasks.map((task) =>
-        task.id === action.payload
+        task._id === action.payload
           ? { ...task, favorite: !task.favorite }
           : task
       );

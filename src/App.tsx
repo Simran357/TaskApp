@@ -18,11 +18,11 @@ function App() {
     handleCompleted,
     handleFavorite,
   } = useTasks();
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showFavoritesOnly, setShowFavoritesOnly] =   useState<boolean>(false);;
   const visibleTasks = showFavoritesOnly
     ? tasks.filter((t) => t.favorite)
     : tasks;
-  const sortedTasks = visibleTasks
+  const sortedTasks= visibleTasks
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <Toaster position="top-center" reverseOrder={false} />

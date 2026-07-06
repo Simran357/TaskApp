@@ -10,6 +10,7 @@ import {
   favoriteTask,
 } from "../api/taskApi";
 import toast from "react-hot-toast";
+import Button from "../components/button.js";
 export const useTasks = () => {
   const [tasks, dispatch] = useReducer(Reducerfn, [] as Task[]);
   const [isEdit, setIsEdit] = useState<string | null>(null);
@@ -20,7 +21,6 @@ export const useTasks = () => {
   });
   const fetchTasks = async () => {
     const res = await getTasks();
-    console.log("GET TASKS RESPONSE");
     dispatch({
       type: "SET_TASKS",
       payload: res.data.tasks.map((task: Task) => ({
@@ -39,12 +39,10 @@ export const useTasks = () => {
     setWarning("Task is required");
     return;
   }
-
   if (!inputVal.disc.trim()) {
     setWarning("Description is required");
     return;
   }
-
   setWarning("");
     try {
       if (isEdit) {
@@ -62,7 +60,7 @@ export const useTasks = () => {
 
   const handleEdit = (task: Task) => {
     if (task.completed) return;
-    setIsEdit(task.id);
+    setIsEdit(task._id);
     setInputVal({
       title: task.task,
       disc: task.disc,
@@ -75,7 +73,6 @@ export const useTasks = () => {
   };
 
   const handleFavorite = async (id: string, favorite: boolean) => {
-    console.log("Clicked:", id, favorite);
     await favoriteTask(id, !favorite);
     await fetchTasks();
   };
@@ -87,14 +84,14 @@ export const useTasks = () => {
         Are you sure you want to delete this task?
       </p>
       <div className="flex justify-end gap-2">
-        <button
+        <Button
           onClick={() => toast.dismiss(t.id)}
           className="px-3 py-1 rounded bg-gray-200"
         >
           Cancel
-        </button>
+        </Button>
 
-        <button
+        <Button
           className="px-3 py-1 rounded bg-red-500 text-white"
           onClick={async () => {
             await deleteTask(task._id);
@@ -104,7 +101,7 @@ export const useTasks = () => {
           }}
         >
           Delete
-        </button>
+        </Button>
       </div>
     </div>
   ));

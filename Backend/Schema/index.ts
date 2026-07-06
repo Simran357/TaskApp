@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, {  Model } from "mongoose";
 import type { INote } from "../interfaces/index.js";
 
 

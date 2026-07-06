@@ -25,7 +25,6 @@ const TaskForm = ({
               title: e.target.value,
             }));
 
-            if (warning) setWarning("");
           }}
           onBlur={() => {
             if (!inputVal.title.trim()) {
@@ -58,7 +57,6 @@ ${warning === "Task is required"
               ...prev,
               disc: e.target.value,
             }));
-            if (warning) setWarning("");
           }}
           onBlur={() => {
             if (!inputVal.disc.trim()) {
